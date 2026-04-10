@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ckb">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Cafe Pasha Menu</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700&family=Inter:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Vazirmatn', sans-serif; background: #0f0f0f; color: #f5f5f5; direction: rtl; min-height: 100vh; padding-bottom: 2rem; }
+  .hero { padding: 28px 20px 22px; text-align: center; border-bottom: 1px solid #1e1e1e; }
+  .logo-box { width: 74px; height: 74px; border-radius: 16px; background: #1a1a1a; border: 2px solid #c9a84c; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; }
+  .logo-inner { width: 50px; height: 50px; background: #c9a84c; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+  .hero-name { font-size: 24px; font-weight: 700; color: #fff; font-family: 'Inter', sans-serif; }
+  .hero-sub { font-size: 13px; color: #666; margin-top: 4px; }
+  .sticky-top { position: sticky; top: 0; z-index: 100; background: #0f0f0f; border-bottom: 1px solid #222; padding: 12px 12px; }
+  .cat-bar { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; flex-direction: row-reverse; }
+  .cat-bar::-webkit-scrollbar { display: none; }
+  .cat-btn { flex-shrink: 0; padding: 9px 20px; border-radius: 22px; border: 1px solid #2e2e2e; background: #1a1a1a; color: #999; font-size: 13px; font-weight: 500; cursor: pointer; white-space: nowrap; font-family: 'Vazirmatn', sans-serif; transition: all 0.2s; }
+  .cat-btn.active { background: #c9a84c; border-color: #c9a84c; color: #0f0f0f; font-weight: 700; }
+  .sec-title { font-size: 11px; font-weight: 700; color: #c9a84c; padding: 22px 16px 10px; letter-spacing: 0.5px; }
+  .items-grid { display: flex; flex-direction: column; gap: 8px; padding: 0 12px; }
+  .item-card { background: #1a1a1a; border: 1px solid #252525; border-radius: 14px; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .item-ku { font-size: 15px; font-weight: 500; color: #f0f0f0; }
+  .item-en { font-size: 11px; color: #555; margin-top: 3px; font-family: 'Inter', sans-serif; direction: ltr; text-align: right; }
+  .item-price { font-size: 14px; font-weight: 700; color: #c9a84c; white-space: nowrap; direction: ltr; font-family: 'Inter', sans-serif; }
+  .price-unit { font-size: 10px; color: #555; font-weight: 400; }
+  .follow-section { margin: 32px 12px 0; }
+  .follow-title { font-size: 13px; font-weight: 700; color: #c9a84c; text-align: center; margin-bottom: 16px; }
+  .social-btns { display: flex; gap: 14px; justify-content: center; }
+  .social-btn { flex: 1; max-width: 150px; padding: 16px 8px; border-radius: 16px; border: 1px solid #2a2a2a; background: #1a1a1a; color: #f0f0f0; font-size: 14px; font-weight: 500; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 9px; text-decoration: none; transition: border-color 0.2s; font-family: 'Vazirmatn', sans-serif; }
+  .social-btn:hover { border-color: #c9a84c; }
+  .s-icon { width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; }
+  .s-ig { background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+  .s-tt { background: #111; border: 1px solid #333; }
+  .footer { text-align: center; color: #252525; font-size: 11px; margin-top: 28px; padding-bottom: 10px; font-family: 'Inter', sans-serif; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="logo-box">
+    <div class="logo-inner">
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+        <path d="M8 14 Q11 9 14 14 Q17 19 20 14" stroke="#0f0f0f" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+        <circle cx="14" cy="7" r="2" fill="#0f0f0f" opacity="0.4"/>
+      </svg>
+    </div>
+  </div>
+  <div class="hero-name">Cafe Pasha</div>
+  <div class="hero-sub">مینیوی ئێمە</div>
+</div>
+
+<div class="sticky-top">
+  <div class="cat-bar" id="catBar">
+    <button class="cat-btn active" data-cat="all">هەموو</button>
+    <button class="cat-btn" data-cat="hot">گەرم</button>
+    <button class="cat-btn" data-cat="cold">سارد</button>
+    <button class="cat-btn" data-cat="seasonal">وەرزی</button>
+    <button class="cat-btn" data-cat="gazi">گازی</button>
+    <button class="cat-btn" data-cat="cakes">کێک</button>
+  </div>
+</div>
+
+<div id="menuContent"></div>
+
+<div class="follow-section">
+  <div class="follow-title">دوامان بکەوە</div>
+  <div class="social-btns">
+    <a class="social-btn" href="https://www.instagram.com/pasha_.cafe?igsh=MW04cms3ZG94ZXNnbQ==" target="_blank">
+      <div class="s-icon s-ig">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+      </div>
+      ئینستاگرام
+    </a>
+    <a class="social-btn" href="https://www.tiktok.com/@cafe_pasha?_r=1&_t=ZS-95PWPV06QQa" target="_blank">
+      <div class="s-icon s-tt">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.19 8.19 0 004.77 1.52V6.75a4.85 4.85 0 01-1-.06z"/></svg>
+      </div>
+      تیکتۆک
+    </a>
+  </div>
+</div>
+
+<div class="footer">Cafe Pasha © 2026</div>
+
+<script>
+const menu = {
+  hot: {
+    label: "خواردنەوەی گەرم",
+    items: [
+      { ku: "ڕێستریتۆ", en: "Restreto", price: 2000 },
+      { ku: "ئێسپریسۆ", en: "Espresso", price: 2000 },
+      { ku: "لونگۆ", en: "Lungo", price: 2000 },
+      { ku: "دەبڵ ئێسپریسۆ", en: "Double Espresso", price: 4000 },
+      { ku: "ئەمریکانۆ", en: "Americano", price: 2000 },
+      { ku: "ئەمریکانۆ بە شیر", en: "Americano & Milk", price: 2500 },
+      { ku: "کاپوچینۆ", en: "Cappucino", price: 2500 },
+      { ku: "فلات وایت", en: "Flat White", price: 2500 },
+      { ku: "لاتێ ماکیاتۆ", en: "Latte Macchiato", price: 2500 },
+      { ku: "ئێسپریسۆ ماکیاتۆ", en: "Macchiato", price: 2000 },
+      { ku: "کارامێل لاتێ", en: "Caramel Latte", price: 3000 },
+      { ku: "سپانیش لاتێ", en: "Spanish Latte", price: 3000 },
+      { ku: "کافێ مۆکا", en: "Cafe Mocha", price: 2500 },
+      { ku: "نیسکافە", en: "Nescafe", price: 2500 },
+      { ku: "شۆکۆلاتەی گەرم", en: "Hot Chocolate", price: 2500 },
+      { ku: "کاکاوی گەرم", en: "Hot Cacao", price: 2500 },
+      { ku: "نۆتێلای گەرم", en: "Hot Nutella", price: 2500 },
+      { ku: "قاوەی کوردی", en: "Kurdish Coffee", price: 2500 },
+    ]
+  },
+  cold: {
+    label: "خواردنەوەی سارد",
+    items: [
+      { ku: "قاوەی سارد", en: "Iced Espresso", price: 2000 },
+      { ku: "لاتێی سارد", en: "Iced Latte", price: 2500 },
+      { ku: "شۆکۆلاتەی سارد", en: "Iced Chocolate", price: 3000 },
+      { ku: "کاکاوی سارد", en: "Iced Cacao", price: 3000 },
+      { ku: "نۆتێلای سارد", en: "Iced Nutella", price: 3000 },
+      { ku: "سپانیش لاتێی سارد", en: "Iced Spanish Latte", price: 3000 },
+      { ku: "ماکیاتۆی سارد", en: "Iced Macchiato", price: 3000 },
+      { ku: "فرایپێ", en: "Frappe", price: 2000 },
+      { ku: "فرایپێی کارامێل", en: "Caramel Frappe", price: 2500 },
+      { ku: "فراپیجینۆ", en: "Frappuccino", price: 2500 },
+    ]
+  },
+  seasonal: {
+    label: "خواردنەوەی وەرزی",
+    items: [
+      { ku: "پرتەقاڵ", en: "Orange Juice", price: 2500 },
+      { ku: "هەنار", en: "Pomegranate Juice", price: 2500 },
+      { ku: "لیمۆ", en: "Lemon Juice", price: 2500 },
+      { ku: "هەنار-پرتەقاڵ", en: "Pomegranate-Orange", price: 2500 },
+      { ku: "لیمۆ-پرتەقاڵ", en: "Lemon-Orange", price: 2500 },
+      { ku: "ئاو لیمۆ", en: "Water Lemon", price: 500 },
+      { ku: "لیمۆ-نەعنا", en: "Lemon-Mint", price: 1000 },
+    ]
+  },
+  gazi: {
+    label: "گازیەکان",
+    items: [
+      { ku: "کۆکاکۆلا", en: "Coca-Cola", price: 1000 },
+      { ku: "سپرایت", en: "Sprite", price: 1000 },
+      { ku: "دیۆ", en: "Dew", price: 1000 },
+      { ku: "فانتا", en: "Fanta", price: 1000 },
+      { ku: "رێدبۆڵ", en: "Red Bull", price: 3000 },
+      { ku: "تایگەر", en: "Tiger", price: 1000 },
+      { ku: "مەکسیکی رێدبۆڵ", en: "Red Bull Maksiki", price: 3500 },
+      { ku: "مەکسیکی تایگەر", en: "Tiger Maksiki", price: 2000 },
+    ]
+  },
+  cakes: {
+    label: "کێکەکان",
+    items: [
+      { ku: "دەبڵ چۆکلێت", en: "Double Chocolate", price: 3000 },
+      { ku: "ڕێد ڤالڤێت", en: "Red Velvet", price: 3000 },
+      { ku: "ترالیچە", en: "Trileçe", price: 2500 },
+      { ku: "ترامیسۆ", en: "Trameso", price: 3000 },
+      { ku: "کراوسۆن", en: "Croissant", price: 2000 },
+    ]
+  }
+};
+
+function fmt(p) {
+  return p.toLocaleString() + ' <span class="price-unit">IQD</span>';
+}
+
+function render(filter) {
+  let html = '';
+  const cats = filter === 'all' ? Object.keys(menu) : [filter];
+  cats.forEach(cat => {
+    const sec = menu[cat];
+    html += `<div class="sec-title">${sec.label}</div><div class="items-grid">`;
+    sec.items.forEach(item => {
+      html += `<div class="item-card">
+        <div>
+          <div class="item-ku">${item.ku}</div>
+          <div class="item-en">${item.en}</div>
+        </div>
+        <div class="item-price">${fmt(item.price)}</div>
+      </div>`;
+    });
+    html += '</div>';
+  });
+  document.getElementById('menuContent').innerHTML = html;
+}
+
+document.getElementById('catBar').addEventListener('click', e => {
+  const btn = e.target.closest('.cat-btn');
+  if (!btn) return;
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  render(btn.dataset.cat);
+});
+
+render('all');
+</script>
+</body>
+</html>
